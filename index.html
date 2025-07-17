@@ -175,6 +175,14 @@
       margin-bottom: 15px;
       font-size: 14px;
     }
+    .sound-notice {
+      display: none;
+      background: #e8f4fc;
+      padding: 10px;
+      border-left: 4px solid #3498db;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
     @media print {
       button, input, label {
         display: none;
@@ -218,6 +226,7 @@
     <button onclick="showResult()">View Result</button>
     
     <div id="result" class="result-container">
+      <div class="sound-notice" id="sound-notice"></div>
       <div class="student-info">
         <div class="student-name" id="student-name"></div>
         <div>Roll No.: <span id="student-roll"></span></div>
@@ -252,10 +261,8 @@
       </div>
     </div>
     
-    <!-- Updated print button with tryPrint function -->
     <button onclick="tryPrint()" class="print-btn">🖨️ Print Result</button>
     
-    <!-- Add Open in Browser button -->
     <button onclick="openInBrowser()" class="browser-btn">🌐 Open in Browser for Full Features</button>
     
     <div class="footer">
@@ -263,9 +270,10 @@
     </div>
   </div>
 
-  <!-- Audio element for congratulatory sound -->
+  <!-- Audio element with multiple sources for better compatibility -->
   <audio id="congrats-sound" preload="auto">
     <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+    <source src="https://www.soundjay.com/buttons/sounds/button-09.mp3" type="audio/mpeg">
     Your browser does not support the audio element.
   </audio>
 
@@ -449,10 +457,12 @@
       const roll = document.getElementById('roll').value;
       const resultDiv = document.getElementById('result');
       const errorDiv = document.getElementById('error-message');
+      const soundNotice = document.getElementById('sound-notice');
       
       // Hide both containers initially
       resultDiv.style.display = 'none';
       errorDiv.style.display = 'none';
+      soundNotice.style.display = 'none';
       
       // Validate input
       if (!roll || roll < 1 || roll > 17) {
@@ -467,8 +477,26 @@
         // Play congratulatory sound for top 3 students (1st, 2nd, 3rd)
         if (student.status.includes('1st') || student.status.includes('2nd') || student.status.includes('3rd')) {
           const audio = document.getElementById('congrats-sound');
-          audio.currentTime = 0; // Rewind to start if already playing
-          audio.play().catch(e => console.log("Audio play prevented by browser:", e));
+          
+          // Reset audio and play
+          audio.currentTime = 0;
+          
+          // First ensure the audio is loaded
+          audio.load();
+          
+          const playPromise = audio.play();
+          
+          if (playPromise !== undefined) {
+            playPromise.then(_ => {
+              // Audio played successfully
+              console.log("Congratulations sound played");
+            }).catch(error => {
+              console.log("Audio playback prevented:", error);
+              // Show notice if audio was blocked
+              soundNotice.innerHTML = '<strong>Note:</strong> Congratulations to our top student! (Enable sound to hear celebration)';
+              soundNotice.style.display = 'block';
+            });
+          }
         }
         
         // Set student info
@@ -512,6 +540,12 @@
         errorDiv.style.display = 'block';
       }
     }
+
+    // Initialize audio by loading it when page loads
+    window.addEventListener('DOMContentLoaded', () => {
+      const audio = document.getElementById('congrats-sound');
+      audio.load();
+    });
   </script>
 </body>
 </html>
