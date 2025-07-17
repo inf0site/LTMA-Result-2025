@@ -87,11 +87,11 @@
     .print-btn:hover {
       background: #219653;
     }
-    .pdf-btn {
-      background: #e74c3c;
+    .browser-btn {
+      background: #9b59b6;
     }
-    .pdf-btn:hover {
-      background: #c0392b;
+    .browser-btn:hover {
+      background: #8e44ad;
     }
     .result-container {
       margin-top: 30px;
@@ -167,13 +167,13 @@
       font-weight: 600;
       display: none;
     }
-    .print-fallback {
+    .browser-notice {
       display: none;
-      background: #f8f9fa;
+      background: #fff8e1;
       padding: 10px;
-      border-radius: 5px;
-      margin-top: 10px;
-      text-align: center;
+      border-left: 4px solid #f39c12;
+      margin-bottom: 15px;
+      font-size: 14px;
     }
     @media print {
       button, input, label {
@@ -193,6 +193,11 @@
 </head>
 <body>
   <div class="container">
+    <!-- Add browser notice at the top -->
+    <div class="browser-notice">
+      <strong>Note:</strong> For full functionality including printing, please open this page in your browser (tap the menu icon → "Open in Browser").
+    </div>
+
     <div class="header">
       <div class="school-name">Lakhan Thapa Memorial Academy</div>
       <div class="school-info">
@@ -247,19 +252,16 @@
       </div>
     </div>
     
-    <button onclick="tryAdvancedPrint()" class="print-btn">🖨️ Print Result</button>
-    <button onclick="downloadPDF()" class="pdf-btn">📥 Download PDF</button>
-    <div class="print-fallback">
-      <p>📸 <strong>No print option?</strong> Take a screenshot and print it from your photos.</p>
-    </div>
+    <!-- Updated print button with tryPrint function -->
+    <button onclick="tryPrint()" class="print-btn">🖨️ Print Result</button>
+    
+    <!-- Add Open in Browser button -->
+    <button onclick="openInBrowser()" class="browser-btn">🌐 Open in Browser for Full Features</button>
     
     <div class="footer">
       © 2082 B.S Lakhan Thapa Memorial Academy. All Rights Reserved.
     </div>
   </div>
-
-  <!-- Add html2pdf.js for PDF generation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 
   <script>
     const data = {
@@ -405,50 +407,48 @@
     const fullMarks = 50;
     const passMarks = 20;
 
-    // Detect if in social media app (Facebook/Messenger/Instagram)
+    // Detect if running in a social media webview
     function isInAppBrowser() {
-      const userAgent = navigator.userAgent || navigator.vendor || window.opera;
-      return /FBAN|FBAV|Instagram|Twitter/i.test(userAgent);
+      return /FBAN|FBAV|Instagram|Twitter/i.test(navigator.userAgent);
     }
 
-    // Show print fallback message if in social app
+    // Show notice if in app browser
     if (isInAppBrowser()) {
-      document.querySelector('.print-fallback').style.display = 'block';
+      document.querySelector('.browser-notice').style.display = 'block';
     }
 
-    // Smart print function with fallbacks
-    function tryAdvancedPrint() {
-      if (typeof window.print === 'function' && !isInAppBrowser()) {
-        window.print(); // Works in regular browsers
-      } else if (isInAppBrowser()) {
-        downloadPDF(); // Fallback to PDF in social apps
-      } else {
-        alert("Please open in Chrome/Safari to print.");
+    // Enhanced print function
+    function tryPrint() {
+      try {
+        if (typeof window.print === 'function') {
+          window.print();
+        } else {
+          alert('For printing, please open this page in your regular browser. (Tap the menu icon → "Open in Browser")');
+        }
+      } catch (e) {
+        alert('Printing is not available here. Please open in your browser.');
       }
     }
 
-    // PDF download function
-    function downloadPDF() {
-      const resultDiv = document.getElementById('result');
-      const opt = {
-        margin: 10,
-        filename: 'Result_Class6A.pdf',
-        image: { type: 'jpeg', quality: 0.98 },
-        html2canvas: { scale: 2 },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-      html2pdf().from(resultDiv).set(opt).save();
+    // Open in browser function
+    function openInBrowser() {
+      try {
+        window.open(window.location.href, '_blank');
+      } catch (e) {
+        alert('Please manually open in your browser');
+      }
     }
 
-    // Original result display function
     function showResult() {
       const roll = document.getElementById('roll').value;
       const resultDiv = document.getElementById('result');
       const errorDiv = document.getElementById('error-message');
       
+      // Hide both containers initially
       resultDiv.style.display = 'none';
       errorDiv.style.display = 'none';
       
+      // Validate input
       if (!roll || roll < 1 || roll > 17) {
         errorDiv.textContent = 'Invalid roll number. Please enter a number between 1 and 17.';
         errorDiv.style.display = 'block';
@@ -458,9 +458,11 @@
       if (data[roll]) {
         const student = data[roll];
         
+        // Set student info
         document.getElementById('student-name').textContent = student.name;
         document.getElementById('student-roll').textContent = roll;
         
+        // Generate marks table
         let marksHtml = '';
         let allPassed = true;
         
@@ -481,6 +483,7 @@
         
         document.getElementById('marks-body').innerHTML = marksHtml;
         
+        // Set summary
         document.getElementById('total-marks').textContent = student.total;
         document.getElementById('percentage').textContent = student.percent;
         document.getElementById('position').textContent = student.status;
