@@ -263,6 +263,12 @@
     </div>
   </div>
 
+  <!-- Audio element for congratulatory sound -->
+  <audio id="congrats-sound" preload="auto">
+    <source src="https://assets.mixkit.co/sfx/preview/mixkit-achievement-bell-600.mp3" type="audio/mpeg">
+    Your browser does not support the audio element.
+  </audio>
+
   <script>
     const data = {
       1: {
@@ -457,6 +463,13 @@
       
       if (data[roll]) {
         const student = data[roll];
+        
+        // Play congratulatory sound for top 3 students (1st, 2nd, 3rd)
+        if (student.status.includes('1st') || student.status.includes('2nd') || student.status.includes('3rd')) {
+          const audio = document.getElementById('congrats-sound');
+          audio.currentTime = 0; // Rewind to start if already playing
+          audio.play().catch(e => console.log("Audio play prevented by browser:", e));
+        }
         
         // Set student info
         document.getElementById('student-name').textContent = student.name;
