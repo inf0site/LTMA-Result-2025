@@ -87,6 +87,12 @@
     .print-btn:hover {
       background: #219653;
     }
+    .browser-btn {
+      background: #9b59b6;
+    }
+    .browser-btn:hover {
+      background: #8e44ad;
+    }
     .result-container {
       margin-top: 30px;
       padding: 25px;
@@ -161,6 +167,14 @@
       font-weight: 600;
       display: none;
     }
+    .browser-notice {
+      display: none;
+      background: #fff8e1;
+      padding: 10px;
+      border-left: 4px solid #f39c12;
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
     @media print {
       button, input, label {
         display: none;
@@ -179,6 +193,11 @@
 </head>
 <body>
   <div class="container">
+    <!-- Add browser notice at the top -->
+    <div class="browser-notice">
+      <strong>Note:</strong> For full functionality including printing, please open this page in your browser (tap the menu icon → "Open in Browser").
+    </div>
+
     <div class="header">
       <div class="school-name">Lakhan Thapa Memorial Academy</div>
       <div class="school-info">
@@ -233,7 +252,11 @@
       </div>
     </div>
     
-    <button onclick="window.print()" class="print-btn">🖨️ Print Result</button>
+    <!-- Updated print button with tryPrint function -->
+    <button onclick="tryPrint()" class="print-btn">🖨️ Print Result</button>
+    
+    <!-- Add Open in Browser button -->
+    <button onclick="openInBrowser()" class="browser-btn">🌐 Open in Browser for Full Features</button>
     
     <div class="footer">
       © 2082 B.S Lakhan Thapa Memorial Academy. All Rights Reserved.
@@ -383,6 +406,38 @@
     const subjects = ["Maths", "Health", "Nepali", "Social", "Science", "English", "Computer"];
     const fullMarks = 50;
     const passMarks = 20;
+
+    // Detect if running in a social media webview
+    function isInAppBrowser() {
+      return /FBAN|FBAV|Instagram|Twitter/i.test(navigator.userAgent);
+    }
+
+    // Show notice if in app browser
+    if (isInAppBrowser()) {
+      document.querySelector('.browser-notice').style.display = 'block';
+    }
+
+    // Enhanced print function
+    function tryPrint() {
+      try {
+        if (typeof window.print === 'function') {
+          window.print();
+        } else {
+          alert('For printing, please open this page in your regular browser. (Tap the menu icon → "Open in Browser")');
+        }
+      } catch (e) {
+        alert('Printing is not available here. Please open in your browser.');
+      }
+    }
+
+    // Open in browser function
+    function openInBrowser() {
+      try {
+        window.open(window.location.href, '_blank');
+      } catch (e) {
+        alert('Please manually open in your browser');
+      }
+    }
 
     function showResult() {
       const roll = document.getElementById('roll').value;
