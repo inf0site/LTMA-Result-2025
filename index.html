@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Class 6A - 1st Terminal Result 2082 - LTMA</title>
+  <style>
+    body {
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #f5f7fa;
+      padding: 20px;
+      color: #333;
+    }
+    .container {
+      max-width: 800px;
+      background: white;
+      margin: auto;
+      padding: 30px;
+      border-radius: 10px;
+      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+    }
+    .header {
+      text-align: center;
+      margin-bottom: 25px;
+      padding-bottom: 15px;
+      border-bottom: 2px solid #e1e5eb;
+    }
+    .school-name {
+      font-size: 24px;
+      font-weight: 700;
+      color: #2c3e50;
+      margin-bottom: 5px;
+    }
+    .school-info {
+      font-size: 14px;
+      color: #7f8c8d;
+      margin-bottom: 10px;
+    }
+    .exam-info {
+      font-size: 18px;
+      font-weight: 600;
+      color: #2980b9;
+      margin: 15px 0;
+    }
+    .portal-title {
+      font-size: 22px;
+      color: #2c3e50;
+      margin: 20px 0;
+      padding: 10px;
+      background: #f8f9fa;
+      border-radius: 5px;
+    }
+    label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 600;
+      color: #34495e;
+    }
+    input {
+      width: 100%;
+      padding: 12px;
+      margin-bottom: 20px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+      box-sizing: border-box;
+    }
+    button {
+      padding: 12px;
+      background: #3498db;
+      color: white;
+      border: none;
+      width: 100%;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s;
+      margin-bottom: 15px;
+    }
+    button:hover {
+      background: #2980b9;
+    }
+    .print-btn {
+      background: #27ae60;
+    }
+    .print-btn:hover {
+      background: #219653;
+    }
+    .result-container {
+      margin-top: 30px;
+      padding: 25px;
+      border: 1px solid #e1e5eb;
+      border-radius: 8px;
+      background: #f8f9fa;
+      display: none;
+    }
+    .student-info {
+      margin-bottom: 20px;
+    }
+    .student-name {
+      font-size: 20px;
+      font-weight: 700;
+      color: #2c3e50;
+    }
+    .marks-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    .marks-table th, .marks-table td {
+      border: 1px solid #ddd;
+      padding: 12px;
+      text-align: left;
+    }
+    .marks-table th {
+      background-color: #3498db;
+      color: white;
+    }
+    .marks-table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+    .pass {
+      color: #27ae60;
+      font-weight: 600;
+    }
+    .fail {
+      color: #e74c3c;
+      font-weight: 600;
+    }
+    .summary {
+      margin-top: 20px;
+      padding: 15px;
+      background: #e8f4fc;
+      border-radius: 5px;
+    }
+    .summary-item {
+      margin-bottom: 8px;
+    }
+    .note {
+      margin-top: 25px;
+      padding: 15px;
+      background: #fff8e1;
+      border-left: 4px solid #f39c12;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 12px;
+      color: #7f8c8d;
+      border-top: 1px solid #e1e5eb;
+      padding-top: 15px;
+    }
+    .error-message {
+      color: #e74c3c;
+      text-align: center;
+      padding: 10px;
+      margin-bottom: 15px;
+      font-weight: 600;
+      display: none;
+    }
+    @media print {
+      button, input, label {
+        display: none;
+      }
+      .result-container {
+        border: none;
+        background: none;
+        padding: 0;
+      }
+      .container {
+        box-shadow: none;
+        padding: 0;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <div class="school-name">Lakhan Thapa Memorial Academy</div>
+      <div class="school-info">
+        Estd: 2053 B.S | Contact: 078-416088 | Email: ltmanawalpur@gmail.com
+      </div>
+      <div class="exam-info">
+        1st Terminal Examination - 2082 B.S | Class: 6 | Section: A
+      </div>
+    </div>
+
+    <div class="portal-title">Student Result Portal</div>
+    
+    <div id="error-message" class="error-message"></div>
+    
+    <label for="roll">Enter Student Roll Number</label>
+    <input type="number" id="roll" placeholder="Enter roll number (1-17)" min="1" max="17">
+    
+    <button onclick="showResult()">View Result</button>
+    
+    <div id="result" class="result-container">
+      <div class="student-info">
+        <div class="student-name" id="student-name"></div>
+        <div>Roll No.: <span id="student-roll"></span></div>
+      </div>
+      
+      <table class="marks-table">
+        <thead>
+          <tr>
+            <th>Subject</th>
+            <th>Full Marks</th>
+            <th>Pass Marks</th>
+            <th>Obtained Marks</th>
+            <th>Status</th>
+          </tr>
+        </thead>
+        <tbody id="marks-body">
+        </tbody>
+      </table>
+      
+      <div class="summary">
+        <div class="summary-item"><strong>Total Marks:</strong> <span id="total-marks"></span>/350</div>
+        <div class="summary-item"><strong>Percentage:</strong> <span id="percentage"></span></div>
+        <div class="summary-item"><strong>Position:</strong> <span id="position"></span></div>
+        <div class="summary-item"><strong>Attendance:</strong> <span id="attendance"></span> days</div>
+        <div class="summary-item"><strong>Final Result:</strong> <span id="final-result"></span></div>
+      </div>
+      
+      <div class="note">
+        <strong>Note:</strong> This is the result of 1st Terminal Examination 2082 B.S. Students or guardians can contact the school administration for any queries regarding the results. 
+        If you find any discrepancies in the marks or details, please report to the school office within 7 days for necessary corrections.
+        Regular office hours: 10:00 AM to 4:00 PM (Sunday to Friday).
+      </div>
+    </div>
+    
+    <button onclick="window.print()" class="print-btn">🖨️ Print Result</button>
+    
+    <div class="footer">
+      © 2082 B.S Lakhan Thapa Memorial Academy. All Rights Reserved.
+    </div>
+  </div>
+
+  <script>
+    const data = {
+      1: {
+        name: "Aarohi Subedi", 
+        marks: [45, 45, 45, 46, 44, 45, 48], 
+        total: 318, 
+        percent: "90.9%", 
+        status: "1st", 
+        attendance: 63
+      },
+      2: {
+        name: "Anish Subedi", 
+        marks: [20, 41.5, 26, 39, 29.5, 39, 31], 
+        total: 226, 
+        percent: "64.6%", 
+        status: "4th", 
+        attendance: 60
+      },
+      3: {
+        name: "Bidur Pandey", 
+        marks: [29, 36.5, 36, 40, 36, 30.5, 30], 
+        total: 238, 
+        percent: "68.0%", 
+        status: "5th", 
+        attendance: 65
+      },
+      4: {
+        name: "Gyawat Rakaskoti", 
+        marks: [27.5, 27.5, 30, 31, 37, 34.5, 16], 
+        total: 203.5, 
+        percent: "58.1%", 
+        status: "Fail", 
+        attendance: 65
+      },
+      5: {
+        name: "Hina Saru Magar", 
+        marks: [37, 33.5, 27, 32, 25.5, 33, 28], 
+        total: 216, 
+        percent: "61.7%", 
+        status: "6th", 
+        attendance: 66
+      },
+      6: {
+        name: "Jenisha Ale Magar", 
+        marks: [12.5, 20, 20, 12, 22, 28.5, 12], 
+        total: 127, 
+        percent: "36.3%", 
+        status: "Fail", 
+        attendance: 64
+      },
+      7: {
+        name: "Khushi Hamal", 
+        marks: [31.5, 32.5, 30, 29, 16, 20.5, 22], 
+        total: 181.5, 
+        percent: "51.9%", 
+        status: "Fail", 
+        attendance: 65
+      },
+      8: {
+        name: "Purab Kandel", 
+        marks: [34.5, 28.5, 25, 8.5, 23, 32, 23], 
+        total: 174.5, 
+        percent: "49.9%", 
+        status: "Fail", 
+        attendance: 65
+      },
+      9: {
+        name: "Roshani Chhetri", 
+        marks: [28.5, 28, 25, 26, 23.5, 32.5, 33], 
+        total: 196.5, 
+        percent: "56.1%", 
+        status: "7th", 
+        attendance: 63
+      },
+      10: {
+        name: "Sagar Gharti Magar", 
+        marks: [13, 20, 20, 22, 12.5, 28, 19], 
+        total: 134.5, 
+        percent: "38.4%", 
+        status: "Fail", 
+        attendance: 66
+      },
+      11: {
+        name: "Sanjil Ruchal", 
+        marks: [23.5, 20, 20, 22, 7, 23.5, 19], 
+        total: 135, 
+        percent: "38.6%", 
+        status: "Fail", 
+        attendance: 66
+      },
+      12: {
+        name: "Samikshya Purbe", 
+        marks: [21.5, 23.5, 25, 20, 22, 22.5, 23], 
+        total: 157.5, 
+        percent: "45.0%", 
+        status: "8th", 
+        attendance: 66
+      },
+      13: {
+        name: "Samyog Dhenga Magar", 
+        marks: [20, 24, 21, 26, 7, 23.5, 15], 
+        total: 136.5, 
+        percent: "39.0%", 
+        status: "Fail", 
+        attendance: 66
+      },
+      14: {
+        name: "Sishir Poudel", 
+        marks: [24.5, 43, 34, 41, 35, 35.5, 37], 
+        total: 250, 
+        percent: "71.4%", 
+        status: "3rd", 
+        attendance: 62
+      },
+      15: {
+        name: "Sonika Subedi", 
+        marks: [42, 34.5, 35, 43, 24.5, 35.5, 43], 
+        total: 257.5, 
+        percent: "73.6%", 
+        status: "2nd", 
+        attendance: 61
+      },
+      16: {
+        name: "Uma Thapa Magar", 
+        marks: [15.5, 20, 20, 24, 4, 30, 22], 
+        total: 135.5, 
+        percent: "38.7%", 
+        status: "Fail", 
+        attendance: 65
+      },
+      17: {
+        name: "Unisha Chhetri", 
+        marks: [33, 42, 27, 30, 24, 34, 13], 
+        total: 203, 
+        percent: "58.0%", 
+        status: "Fail", 
+        attendance: 59
+      },
+    };
+
+    const subjects = ["Maths", "Health", "Nepali", "Social", "Science", "English", "Computer"];
+    const fullMarks = 50;
+    const passMarks = 20;
+
+    function showResult() {
+      const roll = document.getElementById('roll').value;
+      const resultDiv = document.getElementById('result');
+      const errorDiv = document.getElementById('error-message');
+      
+      // Hide both containers initially
+      resultDiv.style.display = 'none';
+      errorDiv.style.display = 'none';
+      
+      // Validate input
+      if (!roll || roll < 1 || roll > 17) {
+        errorDiv.textContent = 'Invalid roll number. Please enter a number between 1 and 17.';
+        errorDiv.style.display = 'block';
+        return;
+      }
+      
+      if (data[roll]) {
+        const student = data[roll];
+        
+        // Set student info
+        document.getElementById('student-name').textContent = student.name;
+        document.getElementById('student-roll').textContent = roll;
+        
+        // Generate marks table
+        let marksHtml = '';
+        let allPassed = true;
+        
+        student.marks.forEach((mark, index) => {
+          const status = mark >= passMarks ? 'pass' : 'fail';
+          if (mark < passMarks) allPassed = false;
+          
+          marksHtml += `
+            <tr>
+              <td>${subjects[index]}</td>
+              <td>${fullMarks}</td>
+              <td>${passMarks}</td>
+              <td>${mark}</td>
+              <td class="${status}">${status === 'pass' ? 'Pass' : 'Fail'}</td>
+            </tr>
+          `;
+        });
+        
+        document.getElementById('marks-body').innerHTML = marksHtml;
+        
+        // Set summary
+        document.getElementById('total-marks').textContent = student.total;
+        document.getElementById('percentage').textContent = student.percent;
+        document.getElementById('position').textContent = student.status;
+        document.getElementById('attendance').textContent = student.attendance;
+        
+        const finalResult = allPassed && !student.status.includes('Fail') ? 
+          `<span class="pass">Pass</span>` : `<span class="fail">Fail</span>`;
+        document.getElementById('final-result').innerHTML = finalResult;
+        
+        resultDiv.style.display = 'block';
+      } else {
+        errorDiv.textContent = 'Result not found for this roll number. Please check the roll number and try again.';
+        errorDiv.style.display = 'block';
+      }
+    }
+  </script>
+</body>
+</html>
