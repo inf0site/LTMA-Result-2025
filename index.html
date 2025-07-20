@@ -294,7 +294,7 @@
         marks: [27.5, 27.5, 30, 31, 37, 34.5, 20], 
         total: 207.5, 
         percent: "59.2%", 
-        status: "Pass B-level",
+        status: "Pass [B-level]", 
         attendance: 64
       },
       5: {
@@ -489,8 +489,9 @@
         document.getElementById('position').textContent = student.status;
         document.getElementById('attendance').textContent = student.attendance;
         
-        const finalResult = allPassed && !student.status.includes('Fail') ? 
-          `<span class="pass">Pass</span>` : `<span class="fail">Fail</span>`;
+        // Special case for roll 4 - show as Pass even if some subjects failed
+        const finalResult = (roll == 4 || (allPassed && !student.status.includes('Fail'))) ? 
+          `<span class="pass">${roll == 4 ? 'Pass [B-level]' : 'Pass'}</span>` : `<span class="fail">Fail</span>`;
         document.getElementById('final-result').innerHTML = finalResult;
         
         resultDiv.style.display = 'block';
