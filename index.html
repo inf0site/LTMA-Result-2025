@@ -30,6 +30,100 @@
       overflow: hidden;
     }
     
+    /* School Header Section (Always Visible) */
+    .school-header {
+      background: linear-gradient(90deg, #0d1b48, #1a3a7e);
+      color: white;
+      padding: 15px 25px;
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      border-bottom: 4px solid #ffc107;
+    }
+    
+    .emblem {
+      width: 60px;
+      height: 60px;
+      background: rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid rgba(255, 255, 255, 0.2);
+      flex-shrink: 0;
+    }
+    
+    .emblem i {
+      font-size: 30px;
+      color: #ffc107;
+    }
+    
+    .header-content {
+      flex: 1;
+    }
+    
+    .academy-name {
+      font-size: 20px;
+      font-weight: 700;
+      margin-bottom: 3px;
+    }
+    
+    .academy-tagline {
+      font-size: 12px;
+      opacity: 0.85;
+      margin-bottom: 6px;
+      font-style: italic;
+    }
+    
+    .academy-details {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-size: 11px;
+    }
+    
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+    
+    .detail-item i {
+      color: #ffc107;
+      width: 12px;
+      text-align: center;
+      font-size: 11px;
+    }
+    
+    /* Exam Info Section (Always Visible) */
+    .exam-info-section {
+      background: #f1f5fd;
+      padding: 10px 25px;
+      display: flex;
+      justify-content: center;
+      font-weight: 600;
+      color: #1a3a7e;
+      font-size: 14px;
+      border-bottom: 1px solid #d0d9f0;
+    }
+    
+    .exam-info {
+      display: flex;
+      gap: 30px;
+    }
+    
+    .exam-info span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      white-space: nowrap;
+    }
+    
+    .exam-info i {
+      color: #1a3a7e;
+      font-size: 12px;
+    }
+    
     /* Search Section */
     .search-section {
       padding: 20px;
@@ -113,100 +207,6 @@
       display: none;
       flex-direction: column;
       position: relative;
-    }
-    
-    /* Header Section */
-    .header-card {
-      background: linear-gradient(90deg, #0d1b48, #1a3a7e);
-      color: white;
-      padding: 15px 25px;
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      border-bottom: 4px solid #ffc107;
-    }
-    
-    .emblem {
-      width: 60px;
-      height: 60px;
-      background: rgba(255, 255, 255, 0.1);
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      border: 2px solid rgba(255, 255, 255, 0.2);
-      flex-shrink: 0;
-    }
-    
-    .emblem i {
-      font-size: 30px;
-      color: #ffc107;
-    }
-    
-    .header-content {
-      flex: 1;
-    }
-    
-    .academy-name {
-      font-size: 20px;
-      font-weight: 700;
-      margin-bottom: 3px;
-    }
-    
-    .academy-tagline {
-      font-size: 12px;
-      opacity: 0.85;
-      margin-bottom: 6px;
-      font-style: italic;
-    }
-    
-    .academy-details {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 10px;
-      font-size: 11px;
-    }
-    
-    .detail-item {
-      display: flex;
-      align-items: center;
-      gap: 4px;
-    }
-    
-    .detail-item i {
-      color: #ffc107;
-      width: 12px;
-      text-align: center;
-      font-size: 11px;
-    }
-    
-    /* Examination Details */
-    .exam-section {
-      background: #f1f5fd;
-      padding: 10px 25px;
-      display: flex;
-      justify-content: center;
-      font-weight: 600;
-      color: #1a3a7e;
-      font-size: 13px;
-      border-bottom: 1px solid #d0d9f0;
-    }
-    
-    .exam-info {
-      display: flex;
-      gap: 30px;
-    }
-    
-    .exam-info span {
-      display: flex;
-      align-items: center;
-      gap: 5px;
-      white-space: nowrap;
-    }
-    
-    .exam-info i {
-      color: #1a3a7e;
-      font-size: 12px;
     }
     
     /* Student Information */
@@ -439,6 +439,10 @@
         display: block !important;
         page-break-after: always;
       }
+      
+      .school-header, .exam-info-section {
+        display: block !important;
+      }
     }
   </style>
 </head>
@@ -447,6 +451,39 @@
     <!-- Add browser notice at the top -->
     <div class="browser-notice">
       <strong>Note:</strong> For full functionality including printing, please open this page in your browser (tap the menu icon → "Open in Browser").
+    </div>
+
+    <!-- School Header (Always Visible) -->
+    <div class="school-header">
+      <div class="emblem">
+        <i class="fas fa-graduation-cap"></i>
+      </div>
+      <div class="header-content">
+        <div class="academy-name">Lakhan Thapa Memorial Academy</div>
+        <div class="academy-tagline">Excellence in Education Since 2053 B.S</div>
+        <div class="academy-details">
+          <div class="detail-item">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Estd: 2053 B.S</span>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-phone-alt"></i>
+            <span>Contact: 078-416088</span>
+          </div>
+          <div class="detail-item">
+            <i class="fas fa-envelope"></i>
+            <span>Email: ltmanawalpur@gmail.com</span>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Exam Info Section (Always Visible) -->
+    <div class="exam-info-section">
+      <div class="exam-info">
+        <span><i class="fas fa-file-alt"></i> 1st Terminal Examination - 2082 B.S</span>
+        <span><i class="fas fa-users"></i> Class: 6 | Section: A</span>
+      </div>
     </div>
 
     <!-- Search Section -->
@@ -461,39 +498,6 @@
     
     <!-- Professional Result Card -->
     <div id="result" class="result-container">
-      <!-- Header Section -->
-      <div class="header-card">
-        <div class="emblem">
-          <i class="fas fa-graduation-cap"></i>
-        </div>
-        <div class="header-content">
-          <div class="academy-name">Lakhan Thapa Memorial Academy</div>
-          <div class="academy-tagline">Excellence in Education Since 2053 B.S</div>
-          <div class="academy-details">
-            <div class="detail-item">
-              <i class="fas fa-calendar-alt"></i>
-              <span>Estd: 2053 B.S</span>
-            </div>
-            <div class="detail-item">
-              <i class="fas fa-phone-alt"></i>
-              <span>Contact: 078-416088</span>
-            </div>
-            <div class="detail-item">
-              <i class="fas fa-envelope"></i>
-              <span>Email: ltmanawalpur@gmail.com</span>
-            </div>
-          </div>
-        </div>
-      </div>
-      
-      <!-- Examination Details -->
-      <div class="exam-section">
-        <div class="exam-info">
-          <span><i class="fas fa-file-alt"></i> 1st Terminal Examination - 2082 B.S</span>
-          <span><i class="fas fa-users"></i> Class: 6 | Section: A</span>
-        </div>
-      </div>
-      
       <!-- Student Information -->
       <div class="student-section">
         <div class="student-details">
@@ -816,6 +820,9 @@
         }
         
         resultDiv.style.display = 'flex';
+        
+        // Scroll to the result section
+        resultDiv.scrollIntoView({ behavior: 'smooth' });
       } else {
         errorDiv.textContent = 'Result not found for this roll number. Please check the roll number and try again.';
         errorDiv.style.display = 'block';
