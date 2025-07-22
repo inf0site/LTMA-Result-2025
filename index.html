@@ -16,7 +16,7 @@
     
     body {
       background: #f5f7fa;
-      padding: 20px;
+      padding: 10px;
       color: #333;
     }
     
@@ -26,24 +26,24 @@
       margin: auto;
       padding: 0;
       border-radius: 10px;
-      box-shadow: 0 0 15px rgba(0,0,0,0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       overflow: hidden;
     }
     
-    /* School Header Section (Always Visible) */
+    /* School Header Section */
     .school-header {
       background: linear-gradient(90deg, #0d1b48, #1a3a7e);
       color: white;
-      padding: 15px 25px;
+      padding: 15px;
       display: flex;
       align-items: center;
-      gap: 15px;
+      gap: 12px;
       border-bottom: 4px solid #ffc107;
     }
     
     .emblem {
-      width: 60px;
-      height: 60px;
+      width: 50px;
+      height: 50px;
       background: rgba(255, 255, 255, 0.1);
       border-radius: 50%;
       display: flex;
@@ -54,22 +54,26 @@
     }
     
     .emblem i {
-      font-size: 30px;
+      font-size: 24px;
       color: #ffc107;
     }
     
     .header-content {
       flex: 1;
+      min-width: 0;
     }
     
     .academy-name {
-      font-size: 20px;
+      font-size: 18px;
       font-weight: 700;
       margin-bottom: 3px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
     }
     
     .academy-tagline {
-      font-size: 12px;
+      font-size: 11px;
       opacity: 0.85;
       margin-bottom: 6px;
       font-style: italic;
@@ -78,8 +82,8 @@
     .academy-details {
       display: flex;
       flex-wrap: wrap;
-      gap: 10px;
-      font-size: 11px;
+      gap: 8px;
+      font-size: 10px;
     }
     
     .detail-item {
@@ -92,31 +96,36 @@
       color: #ffc107;
       width: 12px;
       text-align: center;
-      font-size: 11px;
+      font-size: 10px;
     }
     
-    /* Exam Info Section (Always Visible) */
+    /* Exam Info Section */
     .exam-info-section {
       background: #f1f5fd;
-      padding: 10px 25px;
-      display: flex;
-      justify-content: center;
+      padding: 8px 15px;
       font-weight: 600;
       color: #1a3a7e;
-      font-size: 14px;
+      font-size: 13px;
       border-bottom: 1px solid #d0d9f0;
     }
     
     .exam-info {
       display: flex;
-      gap: 30px;
+      gap: 15px;
+      overflow-x: auto;
+      padding-bottom: 5px;
+      -webkit-overflow-scrolling: touch;
+    }
+    
+    .exam-info::-webkit-scrollbar {
+      display: none;
     }
     
     .exam-info span {
       display: flex;
       align-items: center;
       gap: 5px;
-      white-space: nowrap;
+      flex-shrink: 0;
     }
     
     .exam-info i {
@@ -126,7 +135,7 @@
     
     /* Search Section */
     .search-section {
-      padding: 20px;
+      padding: 15px;
       background: #f8f9fa;
       border-bottom: 1px solid #e1e5eb;
     }
@@ -136,6 +145,7 @@
       margin-bottom: 8px;
       font-weight: 600;
       color: #34495e;
+      font-size: 14px;
     }
     
     input {
@@ -159,7 +169,7 @@
       font-size: 16px;
       font-weight: 600;
       transition: background 0.3s;
-      margin-bottom: 15px;
+      margin-bottom: 10px;
     }
     
     button:hover {
@@ -200,7 +210,7 @@
       font-size: 14px;
     }
     
-    /* Professional Result Card */
+    /* Result Container */
     .result-container {
       width: 100%;
       background: white;
@@ -212,7 +222,7 @@
     /* Student Information */
     .student-section {
       background: #f9fbff;
-      padding: 15px 25px;
+      padding: 15px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -247,7 +257,7 @@
       border-radius: 6px;
       font-weight: 600;
       text-align: center;
-      min-width: 140px;
+      min-width: 120px;
       font-size: 13px;
     }
     
@@ -267,7 +277,7 @@
     
     /* Result Table */
     .result-section {
-      padding: 15px 25px;
+      padding: 15px;
       flex: 1;
     }
     
@@ -318,7 +328,7 @@
     /* Summary Section */
     .summary {
       display: grid;
-      grid-template-columns: repeat(4, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 10px;
       margin: 15px 0 20px;
     }
@@ -397,7 +407,7 @@
     .signature-area {
       display: flex;
       justify-content: space-between;
-      padding: 15px 25px 10px;
+      padding: 15px 15px 10px;
       border-top: 1px dashed #ccc;
       margin-top: 5px;
     }
@@ -444,6 +454,12 @@
         display: block !important;
       }
     }
+    
+    @media (min-width: 768px) {
+      .summary {
+        grid-template-columns: repeat(4, 1fr);
+      }
+    }
   </style>
 </head>
 <body>
@@ -453,7 +469,7 @@
       <strong>Note:</strong> For full functionality including printing, please open this page in your browser (tap the menu icon → "Open in Browser").
     </div>
 
-    <!-- School Header (Always Visible) -->
+    <!-- School Header -->
     <div class="school-header">
       <div class="emblem">
         <i class="fas fa-graduation-cap"></i>
@@ -478,7 +494,7 @@
       </div>
     </div>
     
-    <!-- Exam Info Section (Always Visible) -->
+    <!-- Exam Info Section -->
     <div class="exam-info-section">
       <div class="exam-info">
         <span><i class="fas fa-file-alt"></i> 1st Terminal Examination - 2082 B.S</span>
@@ -496,7 +512,7 @@
       <button onclick="showResult()">View Result</button>
     </div>
     
-    <!-- Professional Result Card -->
+    <!-- Result Container -->
     <div id="result" class="result-container">
       <!-- Student Information -->
       <div class="student-section">
@@ -828,6 +844,20 @@
         errorDiv.style.display = 'block';
       }
     }
+    
+    // Make sure the exam info is fully visible on small screens
+    function adjustExamInfo() {
+      const examInfo = document.querySelector('.exam-info');
+      if (examInfo.scrollWidth > examInfo.clientWidth) {
+        examInfo.style.justifyContent = 'flex-start';
+      } else {
+        examInfo.style.justifyContent = 'center';
+      }
+    }
+    
+    // Run on load and resize
+    window.addEventListener('load', adjustExamInfo);
+    window.addEventListener('resize', adjustExamInfo);
   </script>
 </body>
 </html>
